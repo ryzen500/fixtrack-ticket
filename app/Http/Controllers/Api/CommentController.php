@@ -15,10 +15,23 @@ class CommentController extends Controller
         $this->commentService = $commentService;
     }
 
+
+
+    public function index()
+    {
+        return response()->json($this->commentService->getAll());
+    }
+
     public function store(StoreCommentRequest $request)
     {
         $comment = $this->commentService->create($request->validated());
         return response()->json($comment, 201);
+    }
+
+        public function getStatus($ticketId)
+    {
+        $comments = $this->commentService->getByTicketId($ticketId);
+        return response()->json($comments);
     }
 
     public function update(UpdateCommentRequest $request, $id)
